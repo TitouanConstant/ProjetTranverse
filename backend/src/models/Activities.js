@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Activities.associate = function(models) {
-    Activities.hasMany(models.User, { foreignKey: 'activityId' });
+    Activities.hasMany(models.Cart, { foreignKey: 'activityId' });
   }
 
   return Activities;

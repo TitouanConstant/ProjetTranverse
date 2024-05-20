@@ -16,45 +16,45 @@ export default {
   deleteUser (userId) {
     return Api().delete('admin/users/' + userId)
   },
-  getWatches () {
-    return Api().get('watches')
+  getActivities () {
+    return Api().get('activities')
   },
-  addWatch (watchData) {
-    return Api().post('admin/watches', watchData)
+  addActivity (activityData) {
+    return Api().post('admin/activities', activityData)
   },
-  updateWatch (watchId, watchData) {
-    return Api().put(`admin/watches/${watchId}`, watchData)
+  updateActivity (activityId, activityData) {
+    return Api().put(`admin/activities/${activityId}`, activityData)
   },
-  deleteWatch (watchId) {
-    return Api().delete(`admin/watches/${watchId}`)
+  deleteActivity (activityId) {
+    return Api().delete(`admin/activities/${activityId}`)
   },
-  getBrands () {
-    return Api().get('brands')
+  getOrganizations () {
+    return Api().get('organizations')
   },
-  searchWatches (searchTerm) {
-    return Api().get('watches/search', {
+  searchActivities (searchTerm) {
+    return Api().get('activities/search', {
       params: { search: searchTerm }
     })
   },
-  sortWatchesByPrice (order) {
-    return Api().get('watches/sort', {
+  sortActivitiesByLocation (order) {
+    return Api().get('activities/sort', {
       params: { order: order }
     })
   },
-  getFilteredWatches (filters) {
-    return Api().get('watches/filtered', { params: filters })
+  getFilteredActivities (filters) {
+    return Api().get('activities/filtered', { params: filters })
   },
   getCart () {
     return Api().get('cart')
   },
-  removeFromCart (watchId) {
-    return Api().delete(`cart/remove/${watchId}`)
+  removeFromCart (activityId) {
+    return Api().delete(`cart/remove/${activityId}`)
   },
-  increaseCartItemQuantity (watchId) {
-    return Api().post(`cart/increase/${watchId}`)
+  increaseCartItemQuantity (activityId) {
+    return Api().post(`cart/increase/${activityId}`)
   },
-  decreaseCartItemQuantity (watchId) {
-    return Api().post(`cart/decrease/${watchId}`)
+  decreaseCartItemQuantity (activityId) {
+    return Api().post(`cart/decrease/${activityId}`)
   },
   addToCart (cartData) {
     return Api().post('cart/add', cartData)
@@ -62,16 +62,16 @@ export default {
   checkout () {
     return Api().post('/checkout')
   },
-  getAverageRatingForWatch (watchId) {
-    return Api().get(`watches/${watchId}/average-rating`)
+  getAverageRatingForActivity (activityId) {
+    return Api().get(`activities/${activityId}/average-rating`)
   },
-  getRatingsBreakdownForWatch (watchId) {
-    return Api().get(`ratings/breakdown/${watchId}`)
+  getRatingsBreakdownForActivity (activityId) {
+    return Api().get(`ratings/breakdown/${activityId}`)
   },
   addRating (ratingData) {
     return Api().post('/ratings', ratingData)
   },
-  getUserRatingForWatch (watchId) {
-    return Api().get(`ratings/${watchId}`)
+  getUserRatingForActivity (activityId) {
+    return Api().get(`ratings/${activityId}`)
   }
 }

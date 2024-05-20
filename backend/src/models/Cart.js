@@ -14,12 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 1
     }
   }, {
-    timestamps: false
   });
 
   Cart.associate = function(models) {
     Cart.belongsTo(models.User, { foreignKey: 'userId' });
-    Cart.belongsTo(models.Activities, { foreignKey: 'activityId' }); 
+    Cart.belongsTo(models.Activities, { foreignKey: 'activityId', as: 'activity' }); 
   }
 
   return Cart;

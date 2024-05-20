@@ -5,8 +5,8 @@ import Register from '../components/Register.vue'
 import Login from '../components/Login.vue'
 import Profile from '../components/Profile.vue'
 import AdminUser from '../components/AdminUser.vue'
-import Watches from '../components/Watches.vue'
-import AdminWatches from '../components/AdminWatches.vue'
+import Activities from '../components/Activities.vue'
+import AdminActivities from '../components/AdminActivities.vue'
 import Cart from '../components/Cart.vue'
 
 const routes = [
@@ -62,9 +62,9 @@ const routes = [
     }
   },
   {
-    path: '/admin/watches',
-    name: 'adminWatches',
-    component: AdminWatches,
+    path: '/admin/activities',
+    name: 'adminActivities',
+    component: AdminActivities,
     beforeEnter: (to, from, next) => {
       if (store.state.isUserLoggedIn && store.state.isUserAdmin) {
         next()
@@ -74,9 +74,9 @@ const routes = [
     }
   },
   {
-    path: '/watches',
-    name: 'watches',
-    component: Watches,
+    path: '/activities',
+    name: 'activities',
+    component: Activities,
     beforeEnter: (to, from, next) => {
       if (store.state.isUserLoggedIn) {
         next()

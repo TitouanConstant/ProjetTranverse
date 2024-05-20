@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" md="8">
         <h1 class="text-h4 font-weight-bold mb-4 align-center white-text">Your Cart</h1>
-        <div v-for="item in cartItems" :key="item.watchId" class="cart-item">
+        <div v-for="item in cartItems" :key="item.activityId" class="cart-item">
           <v-card class="mb-3 elevation-2 card-size">
             <div class="d-flex justify-end">
               <v-btn icon class="remove-btn" @click="promptRemoveFromCart(item)">
@@ -13,12 +13,12 @@
             <v-card-title>
               <div class="d-flex align-center justify-space-between">
                 <div class="d-flex align-center">
-                  <v-img :src="item.watch.imageUrl" height="80" width="80" contain class="mr-3"></v-img>
+                  <v-img :src="item.activity.imageUrl" height="80" width="80" contain class="mr-3"></v-img>
                   <div>
-                    <div class="text-h6">{{ item.watch.name }}</div>
-                    <div class="text-subtitle-1">{{ item.watch.brand }}</div>
-                    <div class="text-subtitle-2">${{ item.watch.price }} each</div>
-                    <div class="text-subtitle-2 font-weight-bold">Total: ${{ item.watch.price * item.quantity }}</div>
+                    <div class="text-h6">{{ item.activity.title }}</div>
+                    <div class="text-subtitle-1">{{ item.activity.organization }}</div>
+                    <div class="text-subtitle-2">{{ item.activity.location }}</div>
+                    <div class="text-subtitle-2 font-weight-bold">Total Spots: {{ item.activity.spotsAvailable }}</div>
                   </div>
                 </div>
                 <div class="d-flex align-center quantity-controls">
@@ -41,13 +41,13 @@
             <v-card-title class="summary-title">
               Summary
               <div class="checkout-items">
-                <div v-for="item in cartItems" :key="item.watchId" class="checkout-item">
-                  <span class="item-name">{{ item.watch.name }}</span>
+                <div v-for="item in cartItems" :key="item.activityId" class="checkout-item">
+                  <span class="item-name">{{ item.activity.title }}</span>
                   <span class="item-multiplier">x</span>
                   <span class="item-quantity">{{ item.quantity }}</span>
                 </div>
               </div>
-              Total Price: ${{ totalPrice }}
+              Total Spots: {{ totalSpots }}
             </v-card-title>
             <v-card-actions>
               <v-btn large color="green" @click="showCheckoutDialog = true">Checkout</v-btn>
@@ -109,9 +109,9 @@ export default {
     }
   },
   computed: {
-    totalPrice () {
+    totalSpots () {
       return this.cartItems.reduce((total, item) => {
-        return total + item.quantity * item.watch.price
+        return total + item.quantity
       }, 0)
     }
   },
@@ -140,7 +140,7 @@ export default {
     },
     async removeFromCart (item) {
       try {
-        await AuthenticationService.removeFromCart(item.watchId)
+        await AuthenticationService.removeFromCart(item.activityId)
         this.fetchCart()
         this.showAlert('Item removed from cart', 'success')
       } catch (error) {
@@ -149,7 +149,7 @@ export default {
     },
     async increaseQuantity (item) {
       try {
-        await AuthenticationService.increaseCartItemQuantity(item.watchId)
+        await AuthenticationService.increaseCartItemQuantity(item.activityId)
         this.fetchCart()
         this.showAlert('Quantity increased', 'success')
       } catch (error) {
@@ -161,7 +161,7 @@ export default {
         this.promptRemoveFromCart(item)
       } else {
         try {
-          await AuthenticationService.decreaseCartItemQuantity(item.watchId)
+          await AuthenticationService.decreaseCartItemQuantity(item.activityId)
           this.fetchCart()
           this.showAlert('Quantity decreased', 'success')
         } catch (error) {

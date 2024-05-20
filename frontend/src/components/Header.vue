@@ -1,14 +1,14 @@
 <template>
   <v-app-bar color="grey-darken-4" white fixed>
     <v-btn text :to="{ name: 'home' }" class="app-bar-title">
-      <v-app-bar-title>LuxuryWatches</v-app-bar-title>
+      <v-app-bar-title>VolunteerActivities</v-app-bar-title>
     </v-btn>
     <template v-if="$store.state.isUserLoggedIn && !$store.state.isUserAdmin">
-      <v-btn text :to="{ name: 'watches' }">Watches</v-btn>
+      <v-btn text :to="{ name: 'activities' }">Activities</v-btn>
     </template>
     <template v-if="$store.state.isUserLoggedIn && $store.state.isUserAdmin">
       <v-btn text :to="{ name: 'adminUser' }">AdminUser</v-btn>
-      <v-btn text :to="{ name: 'adminWatches' }">AdminWatches</v-btn>
+      <v-btn text :to="{ name: 'adminActivities' }">AdminActivities</v-btn>
     </template>
     <v-spacer></v-spacer>
     <template v-if="$store.state.isUserLoggedIn && !$store.state.isUserAdmin">
