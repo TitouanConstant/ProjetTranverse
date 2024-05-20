@@ -24,7 +24,7 @@ export default {
 
 <style>
 main {
-    background-image: url('@/assets/BG.png');
+    background-image: url('@/assets/neewbg.webp');
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 100vh;
