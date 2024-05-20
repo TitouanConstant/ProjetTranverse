@@ -7,14 +7,14 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>User List</v-toolbar-title>
+          <v-toolbar-title>Liste des Utilisateurs</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon @click="fetchUsers">
             <v-icon>mdi-refresh</v-icon>
           </v-btn>
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ props }">
-              <v-btn color="primary" dark class="mb-2" v-bind="props">New User</v-btn>
+              <v-btn color="primary" dark class="mb-2" v-bind="props">Nouvel Utilisateur</v-btn>
             </template>
             <v-card>
               <v-card-title>
@@ -24,24 +24,24 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedUser.firstName" label="First Name"></v-text-field>
+                      <v-text-field v-model="editedUser.firstName" label="Prénom"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedUser.lastName" label="Last Name"></v-text-field>
+                      <v-text-field v-model="editedUser.lastName" label="Nom"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field v-model="editedUser.email" label="Email"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedUser.password" label="Password" type="password"></v-text-field>
+                      <v-text-field v-model="editedUser.password" label="Mot de passe" type="password"></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue-darken-1" variant="text" @click="close">Cancel</v-btn>
-                <v-btn color="blue-darken-1" variant="text" @click="save">Save</v-btn>
+                <v-btn color="blue-darken-1" variant="text" @click="close">Annuler</v-btn>
+                <v-btn color="blue-darken-1" variant="text" @click="save">Sauvegarder</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -58,12 +58,12 @@
     </v-data-table>
     <v-dialog v-model="deleteDialog" max-width="500px">
       <v-card>
-        <v-card-title class="headline">Confirm Deletion</v-card-title>
-        <v-card-text>Are you sure you want to delete this user?</v-card-text>
+        <v-card-title class="headline">Confirmer la suppression</v-card-title>
+        <v-card-text>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="deleteDialog = false">Cancel</v-btn>
-          <v-btn color="red darken-1" text @click="confirmDelete">Delete</v-btn>
+          <v-btn color="green darken-1" text @click="deleteDialog = false">Annuler</v-btn>
+          <v-btn color="red darken-1" text @click="confirmDelete">Supprimer</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

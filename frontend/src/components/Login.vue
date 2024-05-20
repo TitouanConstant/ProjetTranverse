@@ -1,23 +1,24 @@
 <template>
-    <v-sheet width="300" class="mx-auto form-container">
-      <h2>Login</h2>
-      <v-form fast-fail @submit.prevent="login">
-        <v-text-field
-          v-model="email"
-          label="Email"
-          :rules="emailRules"
-        ></v-text-field>
-        <v-text-field
-          v-model="password"
-          label="Password"
-          type="password"
-          :rules="passwordRules"
-        ></v-text-field>
-        <v-btn type="submit" block class="mt-2 form-button">Login</v-btn>
-        <p v-if="error" class="error">{{ error }}</p>
-      </v-form>
-    </v-sheet>
-  </template>
+  <v-sheet width="300" class="mx-auto form-container">
+    <h2>Connexion</h2>
+    <v-form fast-fail @submit.prevent="login">
+      <v-text-field
+        v-model="email"
+        label="Email"
+        :rules="emailRules"
+      ></v-text-field>
+      <v-text-field
+        v-model="password"
+        label="Mot de passe"
+        type="password"
+        :rules="passwordRules"
+      ></v-text-field>
+      <v-btn type="submit" block class="mt-2 form-button">Connexion</v-btn>
+      <p v-if="error" class="error">{{ error }}</p>
+    </v-form>
+  </v-sheet>
+</template>
+
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
 export default {

@@ -1,16 +1,16 @@
 <template>
   <v-sheet width="300" class="mx-auto form-container">
-    <h2>Register</h2>
+    <h2>Inscription</h2>
     <v-form fast-fail @submit.prevent="register">
       <v-text-field
         v-model="firstName"
-        label="First name"
+        label="Prénom"
         :rules="firstNameRules"
       ></v-text-field>
 
       <v-text-field
         v-model="lastName"
-        label="Last name"
+        label="Nom"
         :rules="lastNameRules"
       ></v-text-field>
 
@@ -22,17 +22,18 @@
 
       <v-text-field
         v-model="password"
-        label="Password"
+        label="Mot de passe"
         type="password"
         :rules="passwordRules"
       ></v-text-field>
 
-      <v-btn type="submit" block class="mt-2 form-button">Register</v-btn>
+      <v-btn type="submit" block class="mt-2 form-button">Inscription</v-btn>
 
       <p v-if="error" class="error">{{ error }}</p>
     </v-form>
   </v-sheet>
 </template>
+
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
 export default {

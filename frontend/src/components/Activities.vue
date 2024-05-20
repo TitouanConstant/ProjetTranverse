@@ -5,11 +5,11 @@
     </v-alert>
     <v-data-iterator :items="activities" :organizations="organizations" :items-per-page="itemsPerPage">
       <template v-slot:header="{ page, pageCount, prevPage, nextPage }">
-        <h1 class="text-h4 font-weight-bold mb-4 align-center white-text">Activities Collection</h1>
+        <h1 class="text-h4 font-weight-bold mb-4 align-center dark-text">Collection d'Activités</h1>
         <div class="header-search-container d-flex align-center justify-space-between">
           <v-text-field
             v-model="search"
-            label="Search Activities"
+            label="Rechercher des activités"
             single-line
             variant="outlined"
             hide-details
@@ -21,16 +21,16 @@
           ></v-text-field>
           <div>
             <v-btn class="me-2" variant="text" @click="onClickSeeAll">
-              See all
+              Voir tout
             </v-btn>
             <v-btn class="me-2" variant="text" @click="showFilterDialog = true">
-              Filter
+              Filtrer
             </v-btn>
             <v-dialog v-model="showFilterDialog" max-width="500px">
               <v-card>
-                <v-card-title class="headline">Filters</v-card-title>
+                <v-card-title class="headline">Filtres</v-card-title>
                 <v-card-text>
-                  <v-subheader>Location</v-subheader>
+                  <v-subheader>Localisation</v-subheader>
                   <v-range-slider
                     v-model="locationRange"
                     :max="maxLocation"
@@ -42,20 +42,20 @@
                   <div class="d-flex justify-space-between px-3">
                     <v-text-field
                       v-model="locationRange[0]"
-                      label="Min Location"
+                      label="Localisation Minimale"
                       type="number"
                       outlined
                       dense
                     ></v-text-field>
                     <v-text-field
                       v-model="locationRange[1]"
-                      label="Max Location"
+                      label="Localisation Maximale"
                       type="number"
                       outlined
                       dense
                     ></v-text-field>
                   </div>
-                  <v-subheader>Organizations</v-subheader>
+                  <v-subheader>Organisations</v-subheader>
                   <v-checkbox
                     v-for="organization in organizations"
                     :key="organization"
@@ -66,8 +66,8 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="primary darken-1" text @click="applyFilter">Apply</v-btn>
-                  <v-btn color="grey lighten-1" text @click="showFilterDialog = false">Cancel</v-btn>
+                  <v-btn color="primary darken-1" text @click="applyFilter">Appliquer</v-btn>
+                  <v-btn color="grey lighten-1" text @click="showFilterDialog = false">Annuler</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -106,11 +106,11 @@
               </v-img>
               <v-card-title>{{ activity.raw.title }}</v-card-title>
               <v-card-text>
-                <div>Organization: {{ activity.raw.organization }}</div>
-                <div>Location: {{ activity.raw.location }}</div>
+                <div>Organisation : {{ activity.raw.organization }}</div>
+                <div>Localisation : {{ activity.raw.location }}</div>
                 <v-btn color="green" @click.stop="addToCart(activity.raw)">
                   <v-icon left>mdi-cart</v-icon>
-                  Join
+                  Rejoindre
                 </v-btn>
                 <span class="text-grey-lighten-2 text-caption me-2">
                   ({{ activity.raw.averageRating }})
@@ -133,11 +133,11 @@
             </v-img>
             <v-card-text>
               <div class="text-h5 py-2">{{ selectedActivity.organization }}</div>
-              <div class="text-subtitle-1 pb-2">Location: {{ selectedActivity.location }}</div>
+              <div class="text-subtitle-1 pb-2">Localisation : {{ selectedActivity.location }}</div>
               <v-divider></v-divider>
               <div class="pt-3">{{ selectedActivity.description }}</div>
               <v-divider></v-divider>
-              <div class="text-subtitle-1 pb-2">Rating :</div>
+              <div class="text-subtitle-1 pb-2">Note :</div>
               <span class="text-grey-lighten-2 text-caption me-2">
                   ({{ selectedActivity.averageRating }})
                 </span>
@@ -152,13 +152,13 @@
                   variant="text"
                   @click="toggleReveal"
                 >
-                  Click here to see Ratings
+                  Cliquez ici pour voir les notes
                 </v-btn>
             </v-card-text>
             <v-card-actions>
               <v-btn color="green" @click="addToCart(selectedActivity)">
               <v-icon left>mdi-cart</v-icon>
-                  Join
+                  Rejoindre
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn icon @click="dialog = false">
@@ -170,7 +170,7 @@
         <v-dialog v-model="ratingsDialog" max-width="600px">
           <v-card class="d-flex flex-column mx-auto py-8" elevation="10" height="500" width="360">
             <div class="d-flex justify-center mt-auto text-h5 ">
-              Rating overview
+              Vue d'ensemble des notes
             </div>
 
             <div class="d-flex align-center flex-column my-auto">
@@ -185,7 +185,7 @@
                 half-increments
                 readonly
               ></v-rating>
-              <div class="px-3">{{ ratingOverview.totalRatings }} ratings</div>
+              <div class="px-3">{{ ratingOverview.totalRatings }} notes</div>
             </div>
 
             <v-list bg-color="transparent" class="d-flex flex-column-reverse" density="compact">
@@ -209,7 +209,7 @@
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
-            <div class="text-subtitle-1 pb-2">Your Rating :</div>
+            <div class="text-subtitle-1 pb-2">Votre Note :</div>
             <v-rating
               hover
               :length="5"
@@ -219,7 +219,7 @@
             />
             <v-card-actions>
             <v-btn color="primary" @click="saveRating(selectedActivity.id, tempRating)">
-              Save Rating
+              Enregistrer la note
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn icon @click="ratingsDialog = false">
@@ -231,14 +231,13 @@
       </template>
       <template v-slot:footer="{page, pageCount}">
         <v-footer class="justify-space-between text-body-2 mt-4">
-          Total Activities: {{ activities.length }}
-          <div>Page {{ page }} of {{ pageCount }}</div>
+          Total des activités : {{ activities.length }}
+          <div>Page {{ page }} sur {{ pageCount }}</div>
         </v-footer>
       </template>
     </v-data-iterator>
   </v-container>
 </template>
-
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
 import { VAlert } from 'vuetify/components'
@@ -468,22 +467,41 @@ export default {
   .white-text {
     color: white;
   }
+  
   .header-search-container {
-    color: white;
-  }
-  .header-search-container {
+    color: #333; /* Couleur plus foncée pour le texte */
     margin-left: 20px;
     margin-bottom: 15px;
   }
+  
   .search-bar {
     max-width: 600px;
+    background-color: rgba(0, 0, 0, 0.1); /* Fond semi-transparent pour la barre de recherche */
+    color: #333; /* Couleur du texte */
   }
+  
+  .v-btn {
+    
+    background-color: rgba(0, 0, 0, 0.1); /* Fond semi-transparent pour les boutons */
+  }
+  
+  .v-icon {
+    color: #333; /* Couleur des icônes */
+  }
+  
+  .v-footer {
+    background-color: rgba(0, 0, 0, 0.1); /* Fond semi-transparent pour le footer */
+    color: #333; /* Couleur du texte dans le footer */
+  }
+
   .dialog-bottom-transition-enter-active, .dialog-bottom-transition-leave-active {
-  transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
   }
+  
   .dialog-bottom-transition-enter, .dialog-bottom-transition-leave-to {
     opacity: 0;
   }
+  
   .overlay-title {
     position: absolute;
     top: 0;
@@ -492,8 +510,9 @@ export default {
     padding: 8px;
     border-bottom-right-radius: 8px;
   }
+  
   .custom-outlined-card {
-  border: 2px solid var(--v-grey-darken-4);
+    border: 2px solid var(--v-grey-darken-4);
   }
   .h1 {
     color: white;

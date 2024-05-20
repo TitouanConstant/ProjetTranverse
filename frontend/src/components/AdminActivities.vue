@@ -7,12 +7,12 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Activities List</v-toolbar-title>
+          <v-toolbar-title>Liste des Activités</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon @click="fetchActivities">
             <v-icon>mdi-refresh</v-icon>
           </v-btn>
-          <v-btn color="primary" dark @click="openEditDialog()">New Activity</v-btn>
+          <v-btn color="primary" dark @click="openEditDialog()">Nouvelle Activité</v-btn>
         </v-toolbar>
       </template>
 
@@ -35,48 +35,48 @@
     <v-dialog v-model="editDialog" max-width="500px">
       <v-card>
         <v-card-title>
-          <span class="text-h5">{{ editedActivity.id ? 'Edit Activity' : 'New Activity' }}</span>
+          <span class="text-h5">{{ editedActivity.id ? 'Modifier l\'activité' : 'Nouvelle Activité' }}</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field v-model="editedActivity.title" label="Title" :error-messages="activityErrors.title"></v-text-field>
+                <v-text-field v-model="editedActivity.title" label="Titre" :error-messages="activityErrors.title"></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="editedActivity.organization" label="Organization" :error-messages="activityErrors.organization"></v-text-field>
+                <v-text-field v-model="editedActivity.organization" label="Organisation" :error-messages="activityErrors.organization"></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="editedActivity.location" label="Location" :error-messages="activityErrors.location"></v-text-field>
+                <v-text-field v-model="editedActivity.location" label="Lieu" :error-messages="activityErrors.location"></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field v-model="editedActivity.description" label="Description" :error-messages="activityErrors.description"></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="editedActivity.spotsAvailable" label="Spots Available" type="number" :error-messages="activityErrors.spotsAvailable"></v-text-field>
+                <v-text-field v-model="editedActivity.spotsAvailable" label="Places disponibles" type="number" :error-messages="activityErrors.spotsAvailable"></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="editedActivity.imageUrl" label="Image URL" :error-messages="activityErrors.imageUrl"></v-text-field>
+                <v-text-field v-model="editedActivity.imageUrl" label="URL de l'image" :error-messages="activityErrors.imageUrl"></v-text-field>
               </v-col>
             </v-row>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="editDialog = false">Cancel</v-btn>
-          <v-btn color="blue darken-1" text @click="saveActivity">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="editDialog = false">Annuler</v-btn>
+          <v-btn color="blue darken-1" text @click="saveActivity">Sauvegarder</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="deleteDialog" max-width="500px">
       <v-card>
-        <v-card-title class="headline">Confirm Deletion</v-card-title>
-        <v-card-text>Are you sure you want to delete this activity?</v-card-text>
+        <v-card-title class="headline">Confirmer la suppression</v-card-title>
+        <v-card-text>Êtes-vous sûr de vouloir supprimer cette activité ?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="deleteDialog = false">Cancel</v-btn>
-          <v-btn color="red darken-1" text @click="confirmDelete">Delete</v-btn>
+          <v-btn color="green darken-1" text @click="deleteDialog = false">Annuler</v-btn>
+          <v-btn color="red darken-1" text @click="confirmDelete">Supprimer</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

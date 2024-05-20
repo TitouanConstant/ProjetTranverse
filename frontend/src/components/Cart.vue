@@ -2,7 +2,7 @@
   <v-container class="mt-14">
     <v-row>
       <v-col cols="12" md="8">
-        <h1 class="text-h4 font-weight-bold mb-4 align-center white-text">Your Cart</h1>
+        <h1 class="text-h4 font-weight-bold mb-4 align-center white-text">Votre Panier</h1>
         <div v-for="item in cartItems" :key="item.activityId" class="cart-item">
           <v-card class="mb-3 elevation-2 card-size">
             <div class="d-flex justify-end">
@@ -18,7 +18,7 @@
                     <div class="text-h6">{{ item.activity.title }}</div>
                     <div class="text-subtitle-1">{{ item.activity.organization }}</div>
                     <div class="text-subtitle-2">{{ item.activity.location }}</div>
-                    <div class="text-subtitle-2 font-weight-bold">Total Spots: {{ item.activity.spotsAvailable }}</div>
+                    <div class="text-subtitle-2 font-weight-bold">Places Totales : {{ item.activity.spotsAvailable }}</div>
                   </div>
                 </div>
                 <div class="d-flex align-center quantity-controls">
@@ -39,7 +39,7 @@
         <div class="checkout-summary sticky-top">
           <v-card class="mb-3">
             <v-card-title class="summary-title">
-              Summary
+              Résumé
               <div class="checkout-items">
                 <div v-for="item in cartItems" :key="item.activityId" class="checkout-item">
                   <span class="item-name">{{ item.activity.title }}</span>
@@ -47,42 +47,42 @@
                   <span class="item-quantity">{{ item.quantity }}</span>
                 </div>
               </div>
-              Total Spots: {{ totalSpots }}
+              Places Totales : {{ totalSpots }}
             </v-card-title>
             <v-card-actions>
-              <v-btn large color="green" @click="showCheckoutDialog = true">Checkout</v-btn>
+              <v-btn large color="green" @click="showCheckoutDialog = true">Passer à la caisse</v-btn>
             </v-card-actions>
           </v-card>
         </div>
       </v-col>
     </v-row>
-    <!-- Checkout Confirmation Dialog -->
+    <!-- Boîte de dialogue de confirmation de paiement -->
     <v-dialog v-model="showCheckoutDialog" max-width="500px">
       <v-card>
-        <v-card-title class="text-h5">Confirm Checkout</v-card-title>
-        <v-card-text>Do you want to proceed to checkout?</v-card-text>
+        <v-card-title class="text-h5">Confirmer le paiement</v-card-title>
+        <v-card-text>Voulez-vous passer à la caisse ?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="grey-darken-4" text @click="showCheckoutDialog = false">Cancel</v-btn>
-          <v-btn color="red-darken-4" text @click="confirmCheckout">Confirm</v-btn>
+          <v-btn color="grey-darken-4" text @click="showCheckoutDialog = false">Annuler</v-btn>
+          <v-btn color="red-darken-4" text @click="confirmCheckout">Confirmer</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <!-- Remove Item Confirmation Dialog -->
+    <!-- Boîte de dialogue de suppression d'article -->
     <v-dialog v-model="showRemoveDialog" max-width="500px">
       <v-card>
-        <v-card-title class="text-h5">Remove Item</v-card-title>
-        <v-card-text>Are you sure you want to remove this item from the cart?</v-card-text>
+        <v-card-title class="text-h5">Supprimer l'article</v-card-title>
+        <v-card-text>Êtes-vous sûr de vouloir supprimer cet article du panier ?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="grey-darken-4" text @click="showRemoveDialog = false">Cancel</v-btn>
-          <v-btn color="red-darken-4" text @click="confirmRemoveItem">Remove</v-btn>
+          <v-btn color="grey-darken-4" text @click="showRemoveDialog = false">Annuler</v-btn>
+          <v-btn color="red-darken-4" text @click="confirmRemoveItem">Supprimer</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <!-- Alert for Messages -->
+    <!-- Alerte pour les messages -->
     <v-alert v-model="alert" :type="alertType" dismissible @input="alert = false">
       {{ alertText }}
     </v-alert>

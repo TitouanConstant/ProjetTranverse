@@ -1,22 +1,22 @@
 <template>
   <v-app-bar color="grey-darken-4" white fixed>
     <v-btn text :to="{ name: 'home' }" class="app-bar-title">
-      <v-app-bar-title>VolunteerActivities</v-app-bar-title>
+      <v-app-bar-title>Un pour tous</v-app-bar-title>
     </v-btn>
     <template v-if="$store.state.isUserLoggedIn && !$store.state.isUserAdmin">
-      <v-btn text :to="{ name: 'activities' }">Activities</v-btn>
+      <v-btn text :to="{ name: 'activities' }">Activités</v-btn>
     </template>
     <template v-if="$store.state.isUserLoggedIn && $store.state.isUserAdmin">
-      <v-btn text :to="{ name: 'adminUser' }">AdminUser</v-btn>
-      <v-btn text :to="{ name: 'adminActivities' }">AdminActivities</v-btn>
+      <v-btn text :to="{ name: 'adminUser' }">AdminUtilisateur</v-btn>
+      <v-btn text :to="{ name: 'adminActivities' }">AdminActivités</v-btn>
     </template>
     <v-spacer></v-spacer>
     <template v-if="$store.state.isUserLoggedIn && !$store.state.isUserAdmin">
-      <v-btn text :to="{ name: 'cart' }">Cart</v-btn>
+      <v-btn text :to="{ name: 'cart' }">Panier</v-btn>
     </template>
     <template v-if="!$store.state.isUserLoggedIn">
-      <v-btn text :to="{ name: 'login' }">Login</v-btn>
-      <v-btn text :to="{ name: 'register' }">Sign Up</v-btn>
+      <v-btn text :to="{ name: 'login' }">Connexion</v-btn>
+      <v-btn text :to="{ name: 'register' }">Inscription</v-btn>
     </template>
 
     <template v-else>
@@ -24,7 +24,7 @@
         {{ $store.state.user.firstName }}
       </v-btn>
 
-      <v-btn text @click="logout">Log Out</v-btn>
+      <v-btn text @click="logout">Déconnexion</v-btn>
     </template>
 
   </v-app-bar>
