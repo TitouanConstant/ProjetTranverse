@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     })
     Rating.associate = function(models) {
-        Rating.belongsTo(models.Watch, { foreignKey: 'watchId', as: 'watch' })
+        Rating.belongsTo(models.Activities, { foreignKey: 'activityId', as: 'activities' })
         Rating.belongsTo(models.User, { foreignKey: 'userId', as: 'user' })
     }
     return Rating

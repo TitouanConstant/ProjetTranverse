@@ -1,4 +1,4 @@
-const { Cart, Watch } = require('../models')
+const { Cart, Activities } = require('../models')
 const { sequelize } = require('../models')
 
 module.exports = {
@@ -6,21 +6,21 @@ module.exports = {
   async addToCart(req, res) {
     try {
       const userId = req.user.id;
-      const { watchId, quantity } = req.body;
+      const { activityId, quantity } = req.body;
 
-      const watch = await Watch.findByPk(watchId);
-      if (!watch) {
-        return res.status(404).send({ error: 'Watch not found' });
+      const activity = await Activities.findByPk(activityId);
+      if (!activity) {
+        return res.status(404).send({ error: 'Activity not found' });
       }
 
-      if (quantity > watch.quantity) {
-        return res.status(400).send({ error: 'Not enough stock available' });
+      if (quantity > activity.spotsAvailable) {
+        return res.status(400).send({ error: 'Not enough spots available' });
       }
 
       const cartItem = await Cart.findOne({
         where: {
           userId: userId,
-          watchId: watchId
+          activityId: activityId
         }
       });
 
@@ -28,7 +28,7 @@ module.exports = {
         cartItem.quantity += quantity;
         await cartItem.save();
       } else {
-        await Cart.create({ userId, watchId, quantity });
+        await Cart.create({ userId, activityId, quantity });
       }
 
       res.status(201).send({ message: 'Item added to cart successfully.' });
@@ -40,14 +40,14 @@ module.exports = {
   async removeFromCart(req, res) {
     try {
       const userId = req.user.id;
-      const watchId = req.params.watchId;
+      const activityId = req.params.activityId;
   
-      console.log(`Attempting to remove item with watchId: ${watchId} for user: ${userId}`);
+      console.log(`Attempting to remove item with activityId: ${activityId} for user: ${userId}`);
   
       const numRowsDeleted = await Cart.destroy({
         where: {
           userId: userId,
-          watchId: watchId
+          activityId: activityId
         }
       });
   
@@ -63,7 +63,6 @@ module.exports = {
     }
   },
   
-
   async getCart(req, res) {
     try {
       const userId = req.user.id;
@@ -71,27 +70,27 @@ module.exports = {
       const items = await Cart.findAll({
         where: { userId: userId },
         include: [{
-          model: Watch,
-          as: 'watch'
+          model: Activities,
+          as: 'activity'
         }]
       });
 
       res.send(items);
     } catch (err) {
-        console.error(err);
+      console.error(err);
       res.status(500).send({ error: 'An error occurred while fetching the cart items.' });
     }
   },
 
   async increaseCartItemQuantity(req, res) {
     const userId = req.user.id;
-    const watchId = req.params.watchId;
+    const activityId = req.params.activityId;
 
     try {
       const cartItem = await Cart.findOne({
         where: {
           userId: userId,
-          watchId: watchId
+          activityId: activityId
         }
       });
 
@@ -99,9 +98,9 @@ module.exports = {
         return res.status(404).send({ error: 'Cart item not found.' });
       }
 
-      const watch = await Watch.findByPk(watchId);
-      if (cartItem.quantity + 1 > watch.quantity) {
-        return res.status(400).send({ error: 'Not enough stock available.' });
+      const activity = await Activities.findByPk(activityId);
+      if (cartItem.quantity + 1 > activity.spotsAvailable) {
+        return res.status(400).send({ error: 'Not enough spots available.' });
       }
 
       cartItem.quantity += 1;
@@ -115,13 +114,13 @@ module.exports = {
 
   async decreaseCartItemQuantity(req, res) {
     const userId = req.user.id;
-    const watchId = req.params.watchId;
+    const activityId = req.params.activityId;
 
     try {
       const cartItem = await Cart.findOne({
         where: {
           userId: userId,
-          watchId: watchId
+          activityId: activityId
         }
       });
 
@@ -147,22 +146,22 @@ module.exports = {
       const userId = req.user.id;
       const cartItems = await Cart.findAll({
         where: { userId: userId },
-        include: [{ model: Watch, as: 'watch' }],
+        include: [{ model: Activities, as: 'activity' }],
       }, { transaction });
   
-      let outOfStockWatches = [];
+      let outOfStockActivities = [];
   
       for (const item of cartItems) {
-        const watch = await Watch.findByPk(item.watchId, { transaction });
-        if (watch.quantity >= item.quantity) {
-          watch.quantity -= item.quantity;
-          if (watch.quantity === 0) {
-            outOfStockWatches.push(watch.name); // Keep track of out of stock watches
+        const activity = await Activities.findByPk(item.activityId, { transaction });
+        if (activity.spotsAvailable >= item.quantity) {
+          activity.spotsAvailable -= item.quantity;
+          if (activity.spotsAvailable === 0) {
+            outOfStockActivities.push(activity.title); // Keep track of out of stock activities
           }
-          await watch.save({ transaction });
+          await activity.save({ transaction });
         } else {
           await transaction.rollback();
-          return res.status(400).send({ error: `Not enough stock for watch ${watch.name}.` });
+          return res.status(400).send({ error: `Not enough spots for activity ${activity.title}.` });
         }
       }
   
@@ -172,9 +171,9 @@ module.exports = {
   
       await transaction.commit();
   
-      // If any watches went out of stock during the checkout, include that information in the response.
-      if (outOfStockWatches.length > 0) {
-        return res.send({ message: 'Checkout successful, but some items are out of stock.', outOfStockWatches: outOfStockWatches });
+      // If any activities went out of stock during the checkout, include that information in the response.
+      if (outOfStockActivities.length > 0) {
+        return res.send({ message: 'Checkout successful, but some items are out of stock.', outOfStockActivities: outOfStockActivities });
       } else {
         return res.send({ message: 'Checkout successful, cart cleared.' });
       }

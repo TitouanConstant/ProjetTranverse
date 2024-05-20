@@ -5,9 +5,9 @@ const RatingController = {
     async addRating(req, res) {
         try {
             const userId = req.user.id
-            const { watchId, rating } = req.body
+            const { activityId, rating } = req.body
             const existingRating = await Rating.findOne({
-                where: { watchId, userId }
+                where: { activityId, userId }
             })
             if (existingRating) {
                 await Rating.update({ rating }, {
@@ -15,29 +15,29 @@ const RatingController = {
                 })
                 res.status(200).send('Rating updated successfully.');
             } else {
-                const newRating = await Rating.create({ watchId, userId, rating })
+                const newRating = await Rating.create({ activityId, userId, rating })
                 res.status(201).send(newRating)
             }
         } catch (error) {
             res.status(400).send(error.message)
         }
     },
-    async getRatingsForWatch (req, res) {
+    async getRatingsForActivity(req, res) {
         try {
-            const { watchId } = req.params;
+            const { activityId } = req.params;
             const ratings = await Rating.findAll({
-                where: { watchId }
+                where: { activityId }
             });
             res.status(200).send(ratings);
         } catch (error) {
             res.status(400).send(error.message);
         }
     },
-    async getAverageRatingForWatch (req, res) {
+    async getAverageRatingForActivity(req, res) {
         try {
-            const { watchId } = req.params;
+            const { activityId } = req.params;
             const result = await Rating.findAll({
-                where: { watchId },
+                where: { activityId },
                 attributes: [
                     [Sequelize.fn('AVG', Sequelize.col('rating')), 'averageRating']
                 ],
@@ -50,11 +50,11 @@ const RatingController = {
             res.status(400).send(error.message);
         }
     },
-    async getRatingsBreakdownForWatch (req, res) {
+    async getRatingsBreakdownForActivity(req, res) {
         try {
-            const { watchId } = req.params
+            const { activityId } = req.params
             const ratingsBreakdown = await Rating.findAll({
-                where: { watchId },
+                where: { activityId },
                 attributes: ['rating', [Sequelize.fn('COUNT', Sequelize.col('rating')), 'count']],
                 group: ['rating'],
                 order: [['rating', 'DESC']],
@@ -66,12 +66,12 @@ const RatingController = {
             res.status(400).send(error.message)
         }
     },
-    async getUserRatingForWatch (req, res) {
+    async getUserRatingForActivity(req, res) {
         try {
             const userId = req.user.id
-            const watchId = req.params.watchId
+            const activityId = req.params.activityId
             const userRating = await Rating.findOne({
-                where: { watchId, userId }
+                where: { activityId, userId }
             })
             if (userRating) {
                 res.status(200).send(userRating);
